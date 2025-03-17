@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo-container">
+            <img src="images.png" alt="Logo" class="logo">
+        </div>
+
+        <form action="">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" id="Username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class='bx bxs-lock'></i>
+                <span class="toggle-password" onclick="togglePassword()">👁</span>
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordFieldType = passwordField.type;
+
+            if (passwordFieldType === 'password') {
+                passwordField.type = 'text';  
+            } else {
+                passwordField.type = 'password';  
+            }
+        }
+        async function Login(params) {
+            const Username = document.getElementById('username').value;
+
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login',
+            method: 'POST',
+            headers: {
+                'content-Type': 'application/json',
+            },
+            body: JSON.stringify({username,password}),
+                    
+                });
+
+                const result = await response.json();
+                document.getElementById('message').textContent=result.message;
+
+                if(response.ok){
+                    window.location.href='/dashboard';// Redirect to dashboard on sucess'
+                }
+            }
+        
+    </script>
+</body>
+</html>
